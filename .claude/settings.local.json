@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "Bash(curl -L -o \"/c/Users/xijinyu/Desktop/Manchester City/images/crest.png\" \"https://www.footylogos.com/logos/manchester-city\")",
+      "WebFetch(domain:www.pngplay.com)",
+      "WebFetch(domain:commons.wikimedia.org)",
+      "WebFetch(domain:pngs.gg)",
+      "Bash(curl:*)"
+    ]
+  }
+}

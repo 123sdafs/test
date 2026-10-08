@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>曼城博物馆 | Manchester City Museum</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --mcfc-blue: #6CABDD;
+  --mcfc-blue-lighter: #89BDE5;
+  --mcfc-blue-light: #A8D0EE;
+  --mcfc-blue-pale: #CDE4F5;
+  --mcfc-blue-deep: #4A90C4;
+  --white: #FFFFFF;
+  --off-white: #F4F7FA;
+  --dark: #1a1a2e;
+  --dark-text: #2c3e50;
+  --text-muted: #5a6f80;
+  --gold: #C89B3C;
+  --gold-light: #DDB85E;
+  --card-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  --card-shadow-hover: 0 12px 40px rgba(0,0,0,0.10);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background: var(--off-white);
+  color: var(--dark-text);
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+/* ========== PARTICLES ========== */
+#particles {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0;
+}
+
+/* ========== HERO ========== */
+.hero {
+  position: relative; min-height: 100vh; display: flex;
+  align-items: center; justify-content: center;
+  z-index: 1; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(170deg, #6CABDD 0%, #89BDE5 20%, #A8D0EE 45%, #CDE4F5 70%, #E8F2FA 100%);
+}
+.hero-bg::before {
+  content: ''; position: absolute; inset: 0;
+  background:
+    radial-gradient(circle at 15% 25%, rgba(255,255,255,0.35) 0%, transparent 50%),
+    radial-gradient(circle at 85% 70%, rgba(255,255,255,0.2) 0%, transparent 45%),
+    radial-gradient(circle at 50% 85%, rgba(200,155,60,0.1) 0%, transparent 40%);
+  animation: heroGlow 8s ease-in-out infinite alternate;
+}
+@keyframes heroGlow {
+  0% { opacity: 0.6; }
+  100% { opacity: 1; }
+}
+.hero-bg::after {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    0deg, transparent, transparent 3px,
+    rgba(255,255,255,0.04) 3px, rgba(255,255,255,0.04) 6px
+  );
+  mask: radial-gradient(ellipse at 50% 40%, black 25%, transparent 65%);
+}
+
+.hero-overlay-pattern {
+  position: absolute; inset: 0; opacity: 0.06;
+  background-image:
+    radial-gradient(circle at 25% 35%, #1a3a5c 1px, transparent 1px),
+    radial-gradient(circle at 60% 20%, #1a3a5c 1.5px, transparent 1.5px),
+    radial-gradient(circle at 75% 65%, #1a3a5c 1px, transparent 1px),
+    radial-gradient(circle at 40% 75%, #1a3a5c 2px, transparent 2px);
+  background-size: 180px 180px, 220px 220px, 200px 200px, 250px 250px;
+}
+
+/* ---- CREST ---- */
+.hero-crest {
+  position: relative; z-index: 2; text-align: center;
+}
+.crest-wrap {
+  width: 150px; height: 150px; margin: 0 auto 24px;
+  animation: crestFloat 4s ease-in-out infinite;
+}
+.crest-wrap img {
+  width: 100%; height: 100%; object-fit: contain;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.2));
+}
+@keyframes crestFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.hero-title {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: clamp(2.8rem, 7vw, 6rem);
+  font-weight: 900; letter-spacing: 0.1em;
+  color: var(--white);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.18), 0 0 60px rgba(255,255,255,0.25);
+  line-height: 1.15; margin-bottom: 10px;
+}
+.hero-title em {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic; font-weight: 400;
+  display: block; font-size: 0.4em; letter-spacing: 0.14em;
+  color: var(--white); opacity: 0.9;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.2);
+  margin-top: 6px;
+}
+.hero-sub {
+  font-size: clamp(0.95rem, 2vw, 1.2rem);
+  font-weight: 400; letter-spacing: 0.15em;
+  color: rgba(255,255,255,0.88);
+  max-width: 560px; margin: 0 auto;
+}
+.hero-divider {
+  width: 70px; height: 2px; background: var(--white);
+  margin: 24px auto; opacity: 0.55;
+}
+
+.scroll-indicator {
+  position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+  z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 8px;
+  animation: bounce 2s ease-in-out infinite;
+}
+.scroll-indicator span {
+  font-size: 0.7rem; letter-spacing: 0.3em; color: rgba(255,255,255,0.7);
+}
+.scroll-line {
+  width: 1px; height: 44px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.6), transparent);
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(12px); }
+}
+
+/* ========== SECTION COMMONS ========== */
+.section {
+  position: relative; z-index: 1; padding: 100px 24px;
+}
+.section-alt { background: var(--white); }
+.section-label {
+  font-size: 0.72rem; letter-spacing: 0.4em; text-transform: uppercase;
+  color: var(--mcfc-blue-deep); margin-bottom: 12px; font-weight: 600;
+}
+.section-title {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: clamp(1.8rem, 4.5vw, 2.8rem); font-weight: 900;
+  letter-spacing: 0.05em; margin-bottom: 14px; color: var(--dark);
+}
+.section-desc {
+  font-size: 1rem; color: var(--text-muted); max-width: 600px;
+  margin-bottom: 56px; line-height: 1.8;
+}
+.container { max-width: 1200px; margin: 0 auto; }
+
+/* Reveal */
+.reveal {
+  opacity: 0; transform: translateY(40px);
+  transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.35s; }
+.reveal-delay-4 { transition-delay: 0.5s; }
+
+/* ========== EXHIBITIONS ========== */
+.exhibitions-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+}
+.exhibition-card {
+  background: var(--white); border-radius: 8px; padding: 44px 32px 36px;
+  box-shadow: var(--card-shadow); position: relative; overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: default; border: 1px solid rgba(108,171,221,0.15);
+}
+.exhibition-card::after {
+  content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--mcfc-blue), var(--mcfc-blue-lighter));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.45s ease;
+}
+.exhibition-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--card-shadow-hover);
+}
+.exhibition-card:hover::after { transform: scaleX(1); }
+.exhibition-icon {
+  width: 52px; height: 52px; margin-bottom: 22px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--mcfc-blue-pale); border-radius: 12px;
+}
+.exhibition-icon svg { width: 30px; height: 30px; }
+.exhibition-card h3 {
+  font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; color: var(--dark);
+}
+.exhibition-card p {
+  font-size: 0.9rem; color: var(--text-muted); line-height: 1.75;
+}
+.exhibition-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3.5rem; font-weight: 700; color: var(--mcfc-blue-pale);
+  position: absolute; top: 14px; right: 22px; line-height: 1;
+}
+
+/* ========== TIMELINE ========== */
+.timeline-wrap {
+  position: relative; max-width: 800px; margin: 0 auto;
+}
+.timeline-line {
+  position: absolute; left: 50%; top: 0; bottom: 0; width: 3px;
+  background: linear-gradient(to bottom, transparent, var(--mcfc-blue), var(--mcfc-blue), var(--mcfc-blue-lighter), var(--mcfc-blue-light), transparent);
+  transform: translateX(-50%); border-radius: 2px;
+}
+.timeline-item {
+  display: flex; align-items: flex-start; margin-bottom: 56px;
+  position: relative;
+}
+.timeline-item:nth-child(odd) { flex-direction: row; }
+.timeline-item:nth-child(even) { flex-direction: row-reverse; }
+.timeline-dot {
+  position: absolute; left: 50%; top: 6px; transform: translateX(-50%);
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--white); border: 3px solid var(--mcfc-blue);
+  box-shadow: 0 0 0 6px rgba(108,171,221,0.15);
+  z-index: 2;
+}
+.timeline-dot.golden {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 6px rgba(200,155,60,0.18);
+}
+.timeline-content {
+  width: calc(50% - 46px); padding: 26px 28px;
+  background: var(--white); border-radius: 8px;
+  box-shadow: var(--card-shadow);
+  border: 1px solid rgba(108,171,221,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.timeline-content:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--card-shadow-hover);
+}
+.timeline-year {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.2rem; font-weight: 700; color: var(--mcfc-blue-deep);
+  line-height: 1; margin-bottom: 6px;
+}
+.timeline-content.golden-year .timeline-year { color: var(--gold); }
+.timeline-content h4 {
+  font-size: 1.05rem; font-weight: 700; color: var(--dark);
+  margin-bottom: 6px;
+}
+.timeline-content p {
+  font-size: 0.85rem; color: var(--text-muted); line-height: 1.65;
+}
+
+/* ========== PLAYERS ========== */
+.players-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+.player-card {
+  background: var(--white); border-radius: 10px; overflow: hidden;
+  box-shadow: var(--card-shadow);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  cursor: default; border: 1px solid rgba(108,171,221,0.1);
+}
+.player-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--card-shadow-hover);
+}
+.player-visual {
+  height: 280px; position: relative; overflow: hidden;
+  display: flex; align-items: flex-end; justify-content: center;
+  background: linear-gradient(180deg, #E8F2FA 0%, #CDE4F5 40%, #A8D0EE 100%);
+}
+.player-visual img {
+  width: 75%; height: 90%; object-fit: contain; object-position: bottom;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+  transition: transform 0.4s ease;
+}
+.player-card:hover .player-visual img {
+  transform: scale(1.05);
+}
+.player-number-big {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 8rem; font-weight: 700;
+  color: rgba(108,171,221,0.12);
+  position: absolute; right: 10px; top: -16px; line-height: 1;
+  z-index: 1; pointer-events: none;
+}
+.player-info { padding: 24px 22px 28px; position: relative; }
+.player-info::before {
+  content: ''; position: absolute; top: 0; left: 22px; right: 22px; height: 1px;
+  background: var(--mcfc-blue-pale);
+}
+.player-info h4 {
+  font-size: 1.1rem; font-weight: 700; color: var(--dark); margin-bottom: 3px;
+}
+.player-pos {
+  font-size: 0.75rem; color: var(--mcfc-blue-deep);
+  letter-spacing: 0.1em; margin-bottom: 10px; font-weight: 600;
+}
+.player-info p {
+  font-size: 0.8rem; color: var(--text-muted); line-height: 1.6;
+}
+
+/* ========== HONORS ========== */
+.honors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 24px;
+}
+.honor-card {
+  background: var(--white); border-radius: 8px; padding: 36px 20px 28px;
+  text-align: center; box-shadow: var(--card-shadow);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  border: 1px solid rgba(108,171,221,0.08); position: relative;
+  overflow: hidden;
+}
+.honor-card::before {
+  content: ''; position: absolute; top: 0; left: 20%; right: 20%; height: 3px;
+  background: var(--mcfc-blue-light); border-radius: 0 0 3px 3px;
+  transition: background 0.35s ease;
+}
+.honor-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--card-shadow-hover);
+}
+.honor-card:hover::before { background: var(--mcfc-blue); }
+.honor-card.crown-jewel {
+  border-color: rgba(200,155,60,0.2);
+}
+.honor-card.crown-jewel::before { background: var(--gold-light); }
+.honor-card.crown-jewel:hover::before { background: var(--gold); }
+.honor-icon {
+  width: 72px; height: 72px; margin: 0 auto 16px;
+}
+.honor-icon svg { width: 100%; height: 100%; }
+.honor-count {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.6rem; font-weight: 700; color: var(--dark);
+  line-height: 1; margin-bottom: 4px;
+}
+.honor-card.crown-jewel .honor-count { color: var(--gold); }
+.honor-name {
+  font-size: 0.9rem; font-weight: 700; color: var(--dark);
+  letter-spacing: 0.03em; margin-bottom: 6px;
+}
+.honor-card p {
+  font-size: 0.72rem; color: var(--text-muted); line-height: 1.5;
+}
+.honor-star {
+  color: var(--gold); font-size: 0.68rem; letter-spacing: 0.15em;
+  margin-top: 8px; font-weight: 500;
+}
+
+/* ========== HONORS BANNER ========== */
+.honors-banner {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px; margin-bottom: 60px;
+}
+.honors-banner-card {
+  background: var(--white); border-radius: 10px; overflow: hidden;
+  box-shadow: var(--card-shadow); border: 1px solid rgba(108,171,221,0.1);
+}
+.honors-banner-card img {
+  width: 100%; height: auto; display: block;
+}
+.honors-banner-label {
+  padding: 16px 20px; font-size: 0.85rem; font-weight: 600;
+  color: var(--dark); text-align: center; letter-spacing: 0.05em;
+}
+
+/* ========== FOOTER ========== */
+.footer {
+  position: relative; z-index: 1; padding: 72px 24px 32px;
+  text-align: center; background: var(--dark);
+}
+.footer * { color: rgba(255,255,255,0.7); }
+.footer-crest {
+  width: 56px; height: 56px; margin: 0 auto 18px;
+}
+.footer-crest img { width: 100%; height: 100%; object-fit: contain; opacity: 0.55; }
+.footer-links {
+  display: flex; gap: 36px; justify-content: center; flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.footer-links a {
+  text-decoration: none; font-size: 0.82rem; letter-spacing: 0.06em;
+  transition: color 0.3s;
+}
+.footer-links a:hover { color: var(--mcfc-blue) !important; }
+.footer-copy {
+  font-size: 0.7rem; opacity: 0.4; letter-spacing: 0.06em;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .section { padding: 80px 20px; }
+  .timeline-line { left: 22px; }
+  .timeline-item, .timeline-item:nth-child(even) { flex-direction: row; }
+  .timeline-content { width: calc(100% - 56px); margin-left: 44px; }
+  .timeline-dot { left: 22px; }
+  .players-grid { grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); }
+  .player-visual { height: 220px; }
+  .honors-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+  .honors-banner { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .exhibitions-grid { grid-template-columns: 1fr; }
+  .players-grid { grid-template-columns: repeat(2, 1fr); }
+  .player-visual { height: 180px; }
+  .honors-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- ==================== HERO ==================== -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay-pattern"></div>
+  <div class="hero-crest">
+    <div class="crest-wrap">
+      <img src="images/badge.png" alt="Manchester City FC Badge">
+    </div>
+    <h1 class="hero-title">
+      曼城博物馆
+      <em>Manchester City Museum</em>
+    </h1>
+    <div class="hero-divider"></div>
+    <p class="hero-sub">探索蓝月传奇&nbsp;&nbsp;·&nbsp;&nbsp;见证王朝崛起&nbsp;&nbsp;·&nbsp;&nbsp;感受伊蒂哈德的荣耀时刻</p>
+  </div>
+  <div class="scroll-indicator">
+    <span>探索展览</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- ==================== EXHIBITIONS ==================== -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">核心展览</div>
+      <h2 class="section-title">四大主题展区</h2>
+      <p class="section-desc">穿越一个半世纪的风雨，从圣马可教堂的起点到欧洲之巅，沉浸式体验曼彻斯特城足球俱乐部的传奇历程。</p>
+    </div>
+    <div class="exhibitions-grid">
+      <div class="exhibition-card reveal reveal-delay-1">
+        <div class="exhibition-number">01</div>
+        <div class="exhibition-icon">
+          <svg viewBox="0 0 30 30"><circle cx="15" cy="15" r="13" fill="none" stroke="#6CABDD" stroke-width="2"/><circle cx="15" cy="15" r="5" fill="#6CABDD" opacity="0.3"/><circle cx="15" cy="8" r="2.5" fill="#C89B3C" opacity="0.6"/></svg>
+        </div>
+        <h3>蓝月崛起</h3>
+        <p>1880年，圣马可教堂的年轻人组建了这支球队。从缅因路到阿提哈德，从默默无闻到世界之巅——蓝月亮的诞生与成长。</p>
+      </div>
+      <div class="exhibition-card reveal reveal-delay-2">
+        <div class="exhibition-number">02</div>
+        <div class="exhibition-icon">
+          <svg viewBox="0 0 30 30"><polygon points="15,2 27,9 27,21 15,28 3,21 3,9" fill="none" stroke="#C89B3C" stroke-width="1.5"/><circle cx="15" cy="15" r="4" fill="#C89B3C" opacity="0.3"/></svg>
+        </div>
+        <h3>王朝缔造</h3>
+        <p>2008年至今，曼城蜕变为欧洲霸主。瓜迪奥拉的战术革命、百分赛季、三冠王登顶——现代足球王朝的完整叙事。</p>
+      </div>
+      <div class="exhibition-card reveal reveal-delay-3">
+        <div class="exhibition-number">03</div>
+        <div class="exhibition-icon">
+          <svg viewBox="0 0 30 30"><circle cx="15" cy="10" r="8" fill="none" stroke="#6CABDD" stroke-width="2"/><rect x="9" y="20" width="12" height="8" rx="2" fill="#6CABDD" opacity="0.25"/></svg>
+        </div>
+        <h3>传奇球星</h3>
+        <p>从特劳特曼到阿圭罗，从科林·贝尔到德布劳内——每一位身披天蓝战袍的英雄，都在这里留下了不朽的印记。</p>
+      </div>
+      <div class="exhibition-card reveal reveal-delay-4">
+        <div class="exhibition-number">04</div>
+        <div class="exhibition-icon">
+          <svg viewBox="0 0 30 30"><ellipse cx="15" cy="18" rx="12" ry="10" fill="none" stroke="#6CABDD" stroke-width="2"/><path d="M9 10 L15 3 L21 10" fill="none" stroke="#C89B3C" stroke-width="1.8"/></svg>
+        </div>
+        <h3>伊蒂哈德体验</h3>
+        <p>走进阿提哈德球场，感受53,000名球迷的山呼海啸，聆听Blue Moon回荡在曼彻斯特的夜空——这是蓝色的家。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== TIMELINE ==================== -->
+<section class="section" style="background: var(--off-white);">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">历史长廊</div>
+      <h2 class="section-title">蓝月征程</h2>
+      <p class="section-desc">从圣马克到伊蒂哈德，从地区联赛到欧洲之巅——一个半世纪的荣耀之路。</p>
+    </div>
+    <div class="timeline-wrap">
+      <div class="timeline-line"></div>
+      <div class="timeline-item reveal"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-year">1880</div><h4>圣马克的起点</h4><p>安娜·康奈尔与圣马可教堂成员共同创立球队，最初名为圣马可（西戈顿）。</p></div></div>
+      <div class="timeline-item reveal"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-year">1937</div><h4>首夺联赛冠军</h4><p>威尔夫·维尔丁带领曼城首次登顶英格兰顶级联赛，开启了追求荣誉的伟大传统。</p></div></div>
+      <div class="timeline-item reveal"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-year">1969</div><h4>足总杯荣耀</h4><p>在温布利击败莱斯特城，曼城捧起足总杯奖杯，为黄金年代再添华彩。</p></div></div>
+      <div class="timeline-item reveal"><div class="timeline-dot"></div><div class="timeline-content"><div class="timeline-year">1970</div><h4>欧洲优胜者杯</h4><p>曼城在维也纳击败戈尔尼克扎布热，夺得队史第一座欧战奖杯——欧洲优胜者杯。</p></div></div>
+      <div class="timeline-item reveal"><div class="timeline-dot golden"></div><div class="timeline-content golden-year"><div class="timeline-year">2008</div><h4>阿布扎比时代</h4><p>阿布扎比联合集团入主曼城，开启俱乐部史上最辉煌篇章。一个蓝色王朝拉开序幕。</p></div></div>
+      <div class="timeline-item reveal"><div class="timeline-dot golden"></div><div class="timeline-content golden-year"><div class="timeline-year">2012</div><h4>阿圭罗 93:20</h4><p>英超最后一轮第93分20秒，阿圭罗绝杀QPR，为曼城带来44年来首个顶级联赛冠军——"AGUEROOOO!"</p></div></div>
+      <div class="timeline-item reveal"><div class="timeline-dot golden"></div><div class="timeline-content golden-year"><div class="timeline-year">2018</div><h4>百分赛季</h4><p>瓜迪奥拉的曼城以100个积分完成英超赛季——历史首支达到这一里程碑的球队。</p></div></div>
+      <div class="timeline-item reveal"><div class="timeline-dot golden"></div><div class="timeline-content golden-year"><div class="timeline-year">2023</div><h4>三冠王伟业</h4><p>曼城赢得英超、足总杯和队史首座欧冠，成为英格兰足球史上第二支三冠王球队。</p></div></div>
+      <div class="timeline-item reveal"><div class="timeline-dot golden"></div><div class="timeline-content golden-year"><div class="timeline-year">2024</div><h4>英超四连冠</h4><p>曼城史无前例地连续第四次赢得英超冠军，创造英格兰顶级联赛136年历史最长连冠纪录。</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PLAYERS ==================== -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">传奇殿堂</div>
+      <h2 class="section-title">蓝月英雄</h2>
+      <p class="section-desc">每一位身披天蓝的战士，都是这个伟大故事的主角。他们用汗水、天赋与忠诚，写就了曼城的辉煌篇章。</p>
+    </div>
+    <div class="players-grid" id="playersGrid"></div>
+  </div>
+</section>
+
+<!-- ==================== HONORS ==================== -->
+<section class="section" style="background: var(--off-white);">
+  <div class="container">
+    <div class="reveal">
+      <div class="section-label">荣誉殿堂</div>
+      <h2 class="section-title">荣耀之墙</h2>
+      <p class="section-desc">一座座奖杯，记录着蓝月亮在英格兰和欧洲赛场上的统治力。数据来源：曼城官网 <em>mancity.com/club/honours</em></p>
+    </div>
+
+    <!-- Official honour banners from mancity.com -->
+    <div class="honors-banner reveal">
+      <div class="honors-banner-card">
+        <img src="images/honours_team.png" alt="Manchester City Team Honours">
+        <div class="honors-banner-label">团队荣誉总览</div>
+      </div>
+      <div class="honors-banner-card">
+        <img src="images/honours_club.png" alt="Manchester City Club Honours">
+        <div class="honors-banner-label">俱乐部荣誉纪录</div>
+      </div>
+      <div class="honors-banner-card">
+        <img src="images/honours_individual.jpg" alt="Manchester City Individual Honours">
+        <div class="honors-banner-label">个人荣誉纪录</div>
+      </div>
+    </div>
+
+    <!-- Detailed trophy counts -->
+    <div class="honors-grid">
+      <div class="honor-card reveal reveal-delay-1">
+        <div class="honor-icon">
+          <svg viewBox="0 0 72 72"><path d="M36 4 L56 30 L44 66 L36 60 L28 66 L16 30 Z" fill="#E8D5A3" stroke="#C89B3C" stroke-width="1.5"/><text x="36" y="42" text-anchor="middle" fill="#C89B3C" font-size="14" font-family="serif" font-weight="bold">PL</text></svg>
+        </div>
+        <div class="honor-count">10×</div><div class="honor-name">英超联赛冠军</div>
+        <p>1937·1968·2012·2014·2018<br>2019·2021·2022·2023·2024</p>
+      </div>
+      <div class="honor-card reveal reveal-delay-1">
+        <div class="honor-icon">
+          <svg viewBox="0 0 72 72"><path d="M23 8 L49 8 L54 60 L36 52 L18 60 Z" fill="#E8E8E8" stroke="#A0A0A0" stroke-width="1.5"/></svg>
+        </div>
+        <div class="honor-count">7×</div><div class="honor-name">足总杯冠军</div>
+        <p>1904·1934·1956·1969<br>2011·2019·2023</p>
+      </div>
+      <div class="honor-card reveal reveal-delay-2">
+        <div class="honor-icon">
+          <svg viewBox="0 0 72 72"><ellipse cx="36" cy="34" rx="16" ry="18" fill="#F0E8D8" stroke="#C0A060" stroke-width="1.5"/><rect x="26" y="12" width="20" height="12" rx="3" fill="#C0A060" opacity="0.35"/></svg>
+        </div>
+        <div class="honor-count">8×</div><div class="honor-name">联赛杯冠军</div>
+        <p>1970·1976·2014·2016<br>2018·2019·2020·2021</p>
+      </div>
+      <div class="honor-card crown-jewel reveal reveal-delay-2">
+        <div class="honor-icon">
+          <svg viewBox="0 0 72 72"><ellipse cx="36" cy="24" rx="18" ry="20" fill="#F5ECD7" stroke="#C89B3C" stroke-width="2"/><ellipse cx="36" cy="52" rx="22" ry="6" fill="#F5ECD7" stroke="#C89B3C" stroke-width="1.5"/><text x="36" y="28" text-anchor="middle" fill="#C89B3C" font-size="11" font-weight="bold">★</text></svg>
+        </div>
+        <div class="honor-count">1×</div><div class="honor-name">欧冠冠军</div>
+        <p>2023 · 伊斯坦布尔</p>
+        <div class="honor-star">★ 欧洲之王 ★</div>
+      </div>
+      <div class="honor-card reveal reveal-delay-3">
+        <div class="honor-icon">
+          <svg viewBox="0 0 72 72"><circle cx="36" cy="34" r="22" fill="#F5F0E8" stroke="#C89B3C" stroke-width="1.5"/></svg>
+        </div>
+        <div class="honor-count">1×</div><div class="honor-name">世俱杯冠军</div>
+        <p>2023 · 世界之巅</p>
+      </div>
+      <div class="honor-card reveal reveal-delay-3">
+        <div class="honor-icon">
+          <svg viewBox="0 0 72 72"><rect x="16" y="14" width="40" height="44" rx="6" fill="#E8EEF5" stroke="#6CABDD" stroke-width="1.5"/></svg>
+        </div>
+        <div class="honor-count">1×</div><div class="honor-name">欧洲优胜者杯</div>
+        <p>1970 · 维也纳之夜</p>
+      </div>
+      <div class="honor-card reveal reveal-delay-4">
+        <div class="honor-icon">
+          <svg viewBox="0 0 72 72"><path d="M36 6 L54 26 L46 60 L26 60 L18 26 Z" fill="#E8EEF5" stroke="#6CABDD" stroke-width="1.5"/></svg>
+        </div>
+        <div class="honor-count">1×</div><div class="honor-name">欧洲超级杯</div>
+        <p>2023 · 蓝月登顶</p>
+      </div>
+      <div class="honor-card reveal reveal-delay-4">
+        <div class="honor-icon">
+          <svg viewBox="0 0 72 72"><path d="M24 10 L48 10 L54 54 L36 62 L18 54 Z" fill="#E8E8E8" stroke="#B0B0B0" stroke-width="1.5"/></svg>
+        </div>
+        <div class="honor-count">6×</div><div class="honor-name">社区盾杯</div>
+        <p>1937·1968·1972<br>2012·2018·2019</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="footer">
+  <div class="footer-crest">
+    <img src="images/badge.png" alt="MCFC">
+  </div>
+  <div class="footer-links">
+    <a href="https://www.mancity.com/players/mens" target="_blank">球员阵容</a>
+    <a href="https://www.mancity.com/results" target="_blank">赛程结果</a>
+    <a href="https://www.mancity.com/club/honours" target="_blank">荣誉记录</a>
+    <a href="https://www.mancity.com" target="_blank">曼城官网</a>
+  </div>
+  <p class="footer-copy">&copy; 2026 曼城博物馆 · Manchester City Museum. 本网站为球迷致敬项目。球员照片 &amp; 荣誉数据来源：mancity.com</p>
+</footer>
+
+<script>
+/* ========== PARTICLES ========== */
+(function() {
+  const canvas = document.getElementById('particles');
+  const ctx = canvas.getContext('2d');
+  let particles = [], w, h;
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  for (let i = 0; i < 50; i++) {
+    particles.push({
+      x: Math.random() * w, y: Math.random() * h,
+      r: Math.random() * 1.2 + 0.2,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25 - 0.1,
+      o: Math.random() * 0.35 + 0.08,
+    });
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = w; if (p.x > w) p.x = 0;
+      if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${p.o})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ========== REVEAL ON SCROLL ========== */
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -36px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+})();
+
+/* ========== PARALLAX HERO ========== */
+(function() {
+  const hero = document.querySelector('.hero');
+  const bg = document.querySelector('.hero-bg');
+  const crest = document.querySelector('.hero-crest');
+  if (!hero || !bg || !crest) return;
+  window.addEventListener('scroll', () => {
+    const scrollY = window.pageYOffset;
+    const heroH = hero.offsetHeight;
+    if (scrollY > heroH) return;
+    const pct = scrollY / heroH;
+    bg.style.transform = `translateY(${pct * 120}px) scale(${1 + pct * 0.08})`;
+    crest.style.transform = `translateY(${pct * 60}px)`;
+    crest.style.opacity = 1 - pct * 1.1;
+  });
+})();
+
+/* ========== PLAYERS ========== */
+(function() {
+  const players = [
+    { name:'埃尔林·哈兰德', pos:'前锋', num:'9', desc:'挪威巨兽，单赛季36球英超纪录。力量、速度与终结能力的完美结合。',
+      img:'images/erling-haaland.png' },
+    { name:'凯文·德布劳内', pos:'中场', num:'17', desc:'当今最出色的传球大师，助攻机器。他的视野与脚法是曼城进攻的终极武器。',
+      img:'images/debruyne.png' },
+    { name:'罗德里', pos:'中场', num:'16', desc:'世界最佳后腰，2023年欧冠决赛英雄。金球奖得主，攻防转换的基石。',
+      img:'images/rodri.png' },
+    { name:'菲尔·福登', pos:'前锋/中场', num:'47', desc:'曼城青训的骄傲，从球童到核心。技术与智慧并存的新一代蓝月旗帜。',
+      img:'images/phil-foden.png' },
+    { name:'塞尔吉奥·阿圭罗', pos:'前锋', num:'10', desc:'曼城队史最佳射手，9320奇迹缔造者。260粒进球定义了一个时代。',
+      img:null, jersey:'#6CABDD' },
+    { name:'大卫·席尔瓦', pos:'中场', num:'21', desc:'西班牙魔术师，十年间用优雅的传球和视野征服英超，中场大脑。',
+      img:null, jersey:'#6CABDD' },
+    { name:'文森特·孔帕尼', pos:'后卫', num:'4', desc:'铁血队长，蓝月防线的定海神针。对阵莱斯特的世界波永载史册。',
+      img:null, jersey:'#1C3550' },
+    { name:'亚亚·图雷', pos:'中场', num:'42', desc:'科特迪瓦巨兽，中场统治者。2013-14赛季20球定义了B2B中场的极限。',
+      img:null, jersey:'#6CABDD' },
+  ];
+
+  const grid = document.getElementById('playersGrid');
+  players.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'player-card reveal';
+
+    let visualHTML;
+    if (p.img) {
+      visualHTML = `<div class="player-visual"><div class="player-number-big">${p.num}</div><img src="${p.img}" alt="${p.name}" loading="lazy"></div>`;
+    } else {
+      visualHTML = `
+        <div class="player-visual" style="background: linear-gradient(180deg, ${p.jersey === '#1C3550' ? '#1C3550' : '#6CABDD'}10 0%, #FFFFFF 60%);">
+          <div class="player-number-big">${p.num}</div>
+          <svg viewBox="0 0 100 160" width="90" height="144" xmlns="http://www.w3.org/2000/svg" style="position:relative;z-index:2">
+            <path d="M30 20 L28 12 Q32 8 38 12 L42 8 Q44 4 50 6 Q56 4 58 8 L62 12 Q68 8 72 12 L70 20 L70 60 Q72 90 74 110 Q72 130 68 140 L62 150 Q56 155 50 158 Q44 155 38 150 L32 140 Q28 130 26 110 Q28 90 30 60 Z" fill="${p.jersey}" stroke="${p.jersey === '#1C3550' ? '#6CABDD' : '#1C3550'}" stroke-width="1" stroke-opacity="0.4"/>
+            <text x="50" y="100" text-anchor="middle" fill="${p.jersey === '#1C3550' ? '#6CABDD' : '#1C3550'}" font-size="36" font-family="'Cormorant Garamond', serif" font-weight="700" opacity="0.85">${p.num}</text>
+            <circle cx="38" cy="40" r="5" fill="none" stroke="${p.jersey === '#1C3550' ? '#6CABDD' : '#1C3550'}" stroke-width="0.6" opacity="0.2"/>
+          </svg>
+        </div>`;
+    }
+
+    card.innerHTML = `
+      ${visualHTML}
+      <div class="player-info">
+        <h4>${p.name}</h4>
+        <div class="player-pos">${p.num}号 · ${p.pos}</div>
+        <p>${p.desc}</p>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+
+  // Re-observe new reveals
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -36px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+})();
+</script>
+
+</body>
+</html>
